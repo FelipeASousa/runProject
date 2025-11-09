@@ -12,7 +12,7 @@ def unzip():
     for filename in os.listdir(input_folder):
         if filename.endswith(".fit.gz"):
             gz_path = os.path.join(input_folder, filename)
-            fit_path = os.path.join(output_folder, filename[:-3])  # remove .gz
+            fit_path = os.path.join(output_folder, filename[:-3]) 
 
             # Descompacta o arquivo
             with gzip.open(gz_path, 'rb') as f_in:
@@ -37,7 +37,6 @@ def read_fit_file(filename):
     df = pd.DataFrame(records)
     return df
 
-# === Nova parte: ler todos os arquivos .fit da pasta ===
 def read_all_fit_files(folder_path):
     all_dfs = []
     for file in os.listdir(folder_path):
@@ -45,7 +44,7 @@ def read_all_fit_files(folder_path):
             file_path = os.path.join(folder_path, file)
             try:
                 df = read_fit_file(file_path)
-                df["source_file"] = file  # opcional: manter o nome do arquivo
+                df["source_file"] = file  
                 all_dfs.append(df)
                 print(f"✅ Processado: {file} ({len(df)} registros)")
             except Exception as e:
@@ -63,12 +62,12 @@ def read_all_fit_files(folder_path):
 folder = "activities/unzipped"
 output_csv = "activities/all_runs.csv"
 
-# === Executa o processamento ===
 df_final = read_all_fit_files(folder)
 df_final.to_csv()
-# === Salva o DataFrame em CSV ===
+
 if not df_final.empty:
     df_final.to_csv(output_csv, index=False)
     print(f"\n💾 Arquivo salvo com sucesso em: {output_csv}")
 else:
+
     print("Nenhum dado para salvar.")
